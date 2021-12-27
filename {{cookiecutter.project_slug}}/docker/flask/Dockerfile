@@ -28,7 +28,7 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN pip install -r requirements.txt
 
-# Use the deploy_utils script to pull git repos
+# Use the deploy_utils script to pull additional git repos
 RUN python3 /home/app/deploy_utils.py pull-git-repos \
     --git-repos ${GIT_REPOS} --deploy-dir /home/app/code
 
