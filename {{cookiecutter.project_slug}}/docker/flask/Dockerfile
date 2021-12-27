@@ -15,6 +15,8 @@ USER nonroot
 # copy all the files to the container
 COPY --chown=nonroot:nonroot . .
 RUN echo "files in WORKDIR:" && ls -al .
+run mkdir -p ~/.ssh && \
+    cp -n -r dot_ssh/* ~/.ssh/
 
 ARG GIT_REPOS
 
