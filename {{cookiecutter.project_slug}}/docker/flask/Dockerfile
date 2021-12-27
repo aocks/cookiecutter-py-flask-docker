@@ -15,7 +15,7 @@ USER nonroot
 # copy all the files to the container
 COPY --chown=nonroot:nonroot . .
 RUN echo "files in WORKDIR:" && ls -al .
-run mkdir -p ~/.ssh && \
+RUN mkdir -p ~/.ssh && \
     cp -n -r dot_ssh/* ~/.ssh/
 
 ARG GIT_REPOS
@@ -30,7 +30,7 @@ RUN pip install -r requirements.txt
 
 # Use the deploy_utils script to pull git repos
 RUN python3 /home/app/deploy_utils.py pull-git-repos \
-    --git-repos ${GIT_REPOS} --deploy-dir /home/app
+    --git-repos ${GIT_REPOS} --deploy-dir /home/app/code
 
 
 # define the port number the container should expose
