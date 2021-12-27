@@ -4,6 +4,9 @@ This should basically only be run by a WSGI server.
 """
 
 import os
+import sys
+sys.path.append('/home/app/code')
+
 from {{ cookiecutter.project_slug }}.apps import app_factory
 
 
