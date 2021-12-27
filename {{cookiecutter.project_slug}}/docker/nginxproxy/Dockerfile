@@ -1,5 +1,11 @@
 FROM nginx:1.21.4
 
+ARG FLASK_SERVER_ADDR
+ARG FLASK_SERVER_NAME
+
+ENV FLASK_SERVER_ADDR=${FLASK_SERVER_ADDR}
+ENV FLASK_SERVER_NAME=${FLASK_SERVER_NAME}
+
 RUN apt update && apt install -y python3-certbot-nginx sudo
 
 # Add nginx conf files to container
