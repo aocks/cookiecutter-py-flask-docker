@@ -1,0 +1,70 @@
+
+* Introduction
+
+This project provides a [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] template for a dockerized project
+for a python flask web server managed using an nginx reverse proxy.
+
+The basic idea is to give you a simple way to start a new python
+project which contains a web app (for browsers, APIs, or whatever)
+with a few simple commands.
+
+Ideally you should just be able to issue a command like
+
+- =cookiecutter gh:aocks/cookiecutter-py-flask-docker=
+
+and answer a few questions to get the skeleton for a web application
+including things like:
+
+- linting, testing, type checking
+- docker-compose to run nginx and your flask application
+- deployment scripts
+- command line utilities
+
+* Quickstart
+
+First make sure you have [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] installed (e.g., via =pip
+install cookiecutter=). Then do something like
+#+BEGIN_SRC sh
+cookiecutter gh:aocks/cookiecutter-py-flask-docker
+#+END_SRC
+and answer the questions. The following are some details about how the
+fields requested and what they are used for:
+
+- =github_username=:
+  - This can be either your username or the name of your
+    organization. 
+- =project_slug=:
+  - This will determine the name of your new project directory and is
+    auto-generated from your project name to be allow lowercase with
+    no space or hyphens.
+
+* Implementation
+
+This section describes the implementation details of how this
+cookiecutter template works. It is mainly of interesting if you want
+to extend the template. If you just want to use it, you can skip this
+section.
+
+** Setup
+
+To start developing, testing, or extending this template you should do
+the following:
+
+ 1. Clone from github:
+    =cd ~/code && git clone git@github.com:cookiecutter-py-flask-docker.git=
+ 2. Move the resulting module into one which ends in =.git=:
+    =mv cookiecutter-py-flask-docker cookiecutter-py-flask-docker.git=
+    - The cookiecutter program wants to work with repos and will not
+      run on something that does not look as expected.
+    - You could also do =git clone --bare= above but then you will
+      have to clone and commit an extra time.
+ 3. Edit files in the newly cloned repo and commit.
+    - *IMPORTANT*: cookiecutter will only see commited files.
+ 4. Install cookiecutter (possibly in a venv).
+ 5. Change to a temporary directory so your boilerplate doesn't
+    clutter your main code.
+    - =cd /tmp=
+ 5. Run cookie cutter on the repo and answer the questions:
+    - =cookiecutter ~/code/cookiecutter-py-flask-docker.git=
+ 6. Examine the newly created project, and repeat the steps above
+    until the cookiecutter template produces what you want.

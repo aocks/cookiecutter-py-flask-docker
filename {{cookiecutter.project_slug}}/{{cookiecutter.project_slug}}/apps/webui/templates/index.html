@@ -1,0 +1,12 @@
+
+{# Use raw so cookiecutter does not get confused #}
+{% raw -%}    
+
+{% extends 'layout.html' %}
+
+{% block body %}
+{%- endraw %}
+Welcome to {{cookiecutter.project_slug}}!
+{% raw -%}        
+{% endblock %}
+{%- endraw %}

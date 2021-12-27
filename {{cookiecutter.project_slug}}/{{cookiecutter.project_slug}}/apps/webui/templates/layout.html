@@ -1,0 +1,55 @@
+
+{# Use raw so cookiecutter does not get confused #}
+{% raw -%}    
+
+{# All other templates should do {% extends 'layout.html' %} #}
+{# and define {% block body %} for the contents. #}    
+
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <meta name="viewport"
+	  content="width=device-width, initial-scale=1.0"
+	  charset="utf-8">
+    <link rel="stylesheet"
+	  href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
+	  >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-tooltip@2.0.2/dist/css/bulma-tooltip.min.css">    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	  integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	  crossorigin="anonymous">    
+    <title>
+      {% block title %}
+      {{ title }}
+      {% endblock %}
+    </title>
+    {% endblock %}
+  </head>
+  <body>    
+    <div id="mainapp">
+      <div class="tile is-ancestor">
+	{# If you do not want sidebar, do {% set skip_sidebar 1 %} #}
+	{% if skip_sidebar %}
+	<!-- no sidebar -->
+	{% else %}
+	<div class="tile is-3 is-vertical is-parent">
+	  {% include 'sidebar.html' %}
+	</div>
+	{% endif %}
+	<div class="tile is-vertical is-parent">
+	  <div class="tile is-child box has-background-primary">
+	    {% block topbar %}
+	    {% include 'topbar.html' %}
+	    {% endblock %}
+	  </div>	  
+	  <div class="tile is-child box">
+	    {% block body %}
+	    {% endblock %}
+	  </div>
+	</div>
+      </div>
+  </body>  
+</html>
+
+{%- endraw %}            
