@@ -38,5 +38,11 @@ def serve(host, port, debug, my_app=None):
     my_app.run(host=host, port=port, debug=debug)
 
 
+def main():
+    """Run the main command line.
+    """
+    return cli()
+
+
 if __name__ == "__main__":
-    cli()
+    main()

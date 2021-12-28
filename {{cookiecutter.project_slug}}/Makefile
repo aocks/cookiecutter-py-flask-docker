@@ -61,7 +61,7 @@ reqs:  ## Make requirements by install things via pip
 	@if [ -z "`which pip | grep venv`" ] ; then \
 		echo "Does not seem like you setup venv; try make help_venv" &&\
 			exit 1 ; fi
-	pip install -r requirements_dev.txt
+	pip install -r requirements_dev.txt && pip install -r requirements.txt
 
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
