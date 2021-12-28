@@ -58,7 +58,7 @@ docker_down:  ## bring down docker containers created from this project
 	${MAKE} -C docker docker_down
 
 reqs:  ## Make requirements by install things via pip
-	@if [-z "`which pip | grep venv`"] ; then \
+	@if [ -z "`which pip | grep venv`" ] ; then \
 		echo "Does not seem like you setup venv; try make help_venv" &&\
 			exit 1 ; fi
 	pip install -r requirements_dev.txt
