@@ -2,11 +2,14 @@
 
 SHELL = /bin/bash
 
-.EXPORT_ALL_VARIABLES
+export LOCAL_HTTP_PORT
+export LOCAL_SSL_PORT
+
 .PHONY: clean help deployn
 
 deploy:
-	cp -r ../{{cookiecutter.project_slug}} flask/code/
+	mkdir -p flask/code
+	cp -r ../{{cookiecutter.project_slug}} flask/code/{{cookiecutter.project_slug}}
 	docker-compose build
 	docker-compose up
 
