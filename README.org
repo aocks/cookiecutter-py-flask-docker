@@ -41,6 +41,10 @@ cookiecutter gh:aocks/cookiecutter-py-flask-docker
 and answer the questions. The following are some details about how the
 fields requested and what they are used for:
 
+- =server_address=:
+  - This will be the domain name for your server. This only really
+    matters once you deploy to production and want to obtain SSL
+    certificates via certbot.
 - =github_username=:
   - This can be either your username or the name of your
     organization. 
@@ -48,6 +52,13 @@ fields requested and what they are used for:
   - This will determine the name of your new project directory and is
     auto-generated from your project name to be allow lowercase with
     no space or hyphens.
+- =github_repos=:
+  - This should be a comma separated list of GitHub repos to include
+    when deploying your project. For example, if you set the value for
+    this to =emin63/ox_secrets,emin63/ox_ui= then those two repos will
+    be pulled and put into the docker container for your flask
+    app. You can leave this as the default or blank or see the section
+    on [[#sec-supporting-repos][Supporting repos]] for more details.
 
 Once you are done, [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] will create a new directory for you
 based on the =project_slug= value you specified. This directory has
@@ -111,7 +122,52 @@ usage, and finally regression tests.
 You should do =make check= regularly and fix any errors in order to
 maintain high quality code.
 
-** Docker, certbot, etc.
+** Local development and command line
+
+You can do local development on your flask app and then use the
+command line to launch a development server via something like the
+following (replace =python_boilerplate= with the name of your own project):
+#+BEGIN_SRC shell :session show-cpfd
+PYTHONPATH=`pwd` python3 python_boilerplate/cli.py \
+   fcli serve --port 9080
+#+END_SRC
+
+You can also add other commands to the =cli.py= module so you can
+conveniently work with your project via the command line. For example,
+adding commands to list user accounts, add/remove things from a
+database, run jobs, and so on can be helpful.
+
+#+RESULTS:
+
+** Deploying code
+
+This section describes the code deployment process in more detail.
+
+*** Supporting repos
+    :PROPERTIES:
+    :CUSTOM_ID:  sec-supporting-repos
+    :END:
+
+You can provide a comma separated list of GitHub repos to deploy along
+with your flask app. This is particularly useful if your project
+depends on other *private* repos and you want the latest version of
+those automatically deployed into the docker container running your
+flask app.
+
+If the repos you provide are public, they will be pulled without any
+further work from you. If the repos you provide are private, you must
+create GitHub deployment keys and put them into the
+=/docker/flask/dot_ssh/= directory with the name =dk_REPO_id_rsa=. For
+example if you have a repo at =github.com/foo/bar= and you provide
+=foo/bar= in the =github_repos= setting when running cookiecutter,
+then you will need to create a file named
+
+- =PROJECT/docker/flask/dot_ssh/dk_bar_id_rsa=
+
+so that the docker scripts can locate the deployment key and pull your
+supporting repo.
+
+*** Docker, certbot, etc.
 
 One of the main motivations for using this template to setup docker,
 nginx, and flask is so you can easily manage SSL certificates with
