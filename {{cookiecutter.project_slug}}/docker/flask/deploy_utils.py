@@ -15,7 +15,7 @@ def cli():
 
 @cli.command()
 @click.option('--git-repos', envvar='GIT_REPOS', help=(
-    'Comma separated list of repos to pull (e.g., emin63/ox_secrets,foo/bar).\n'
+    'Comma separated list of repos to pull (e.g., emin63/ox_secrets,ab/cd).\n'
     'Will use GIT_REPOS env var as default.'))
 @click.option('--deploy-dir', help=(
     'Parent dirctory for where to deploy git repos we pull.'))
@@ -37,7 +37,7 @@ def pull_git_repos(git_repos, deploy_dir, loglevel):
         repo = full_name.split('/')[-1]
         dk_file = f'{os.environ["HOME"]}/.ssh/dk_{repo}_id_rsa'
         if ':' not in full_name:
-            if os.path.exists(dk_file):            
+            if os.path.exists(dk_file):
                 full_name = f'git@github.com:{full_name}'
                 shell_env['GIT_SSH_COMMAND'] = (
                     f'ssh -vvv -i {dk_file} -o IdentitiesOnly=yes')
