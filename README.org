@@ -111,6 +111,11 @@ usage, and finally regression tests.
 You should do =make check= regularly and fix any errors in order to
 maintain high quality code.
 
+** Docker, certbot, etc.
+
+One of the main motivations for using this template to setup docker,
+nginx, and flask is so you can easily manage SSL certificates with certbot.
+
 * Implementation
 
 This section describes the implementation details of how this
