@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-RUN apt update && apt install -y python3 python3-venv git
+RUN apt update && apt install -y python3 python3-venv git curl
 
 # upgrade pip
 
