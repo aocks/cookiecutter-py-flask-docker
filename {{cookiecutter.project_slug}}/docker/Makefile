@@ -2,8 +2,8 @@
 
 SHELL = /bin/bash
 
-export LOCAL_HTTP_PORT
-export LOCAL_SSL_PORT
+export NGINX_HTTP_PORT
+export NGINX_SSL_PORT
 
 .PHONY: clean help deployn
 
@@ -14,7 +14,7 @@ deploy:
 	docker-compose up
 
 local_deploy:
-	LOCAL_HTTP_PORT=9080 LOCAL_SSL_PORT=9443 ${MAKE} deploy
+	NGINX_HTTP_PORT=9080 NGINX_SSL_PORT=9443 ${MAKE} deploy
 
 down:
 	docker-compose down
