@@ -32,7 +32,9 @@ def create_app(loglevel=logging.INFO):
     # Do imports as late as possible so changes to various settings
     # can be seen by flask
 
-    from {{cookiecutter.project_slug}}.apps.webui import main
+    from {{cookiecutter.project_slug}}.apps.webui \
+        import main  # pylint: disable=import-outside-toplevel
+
     my_app = main.create()
 
     return my_app
