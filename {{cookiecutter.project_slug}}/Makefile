@@ -1,5 +1,33 @@
-.PHONY: clean clean-build clean-pyc clean-test coverage dist docs help install lint lint/flake8 deploy local_deploy
+.PHONY: clean clean-build clean-pyc clean-test coverage dist help \
+        lint lint/flake8 lint/pylint pytype deploy local_deploy
 .DEFAULT_GOAL := help
+
+PROJECT={{ cookiecutter.project_slug }}
+
+PYTEST_TARGET = ${PROJECT}
+PYTEST_EXTRA_FLAGS = 
+PYTEST_MINCOV = --cov-fail-under=60
+PYTEST_COV = --cov=${PYTEST_TARGET} --cov-report term-missing ${PYTEST_MINCOV}
+PYTEST_FLAGS = -vvv --doctest-modules --doctest-glob='*.md' \
+               --maxfail=20
+
+
+################################################################
+#                                                              #
+#  PYTEST_IGNORE gets added to for stuff tester should ignore. #
+#  Note that we need := for assignment to keep appending       #
+
+PYTEST_IGONRE = 
+
+# Ignore setup.py
+PYTEST_IGNORE := ${PYTEST_IGNORE} --ignore=setup.py
+
+# Ignore venv
+PYTEST_IGNORE := ${PYTEST_IGNORE} --ignore=venv_${PROJECT} --ignore=venv
+
+# End PYTEST_IGNORE section                                    #
+#                                                              #
+################################################################
 
 
 define PRINT_HELP_PYSCRIPT
@@ -21,6 +49,8 @@ deploy:  ## deploy running docker containers onto this machine
 	${MAKE} -C docker deploy
 local_deploy:  ## deploy running docker containers with "local" ports
 	${MAKE} -C docker local_deploy
+docker_down:  ## bring down docker containers created from this project
+	${MAKE} -C docker docker_down
 
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
@@ -43,47 +73,32 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
-lint/flake8: ## check style with flake8
-	flake8 {{ cookiecutter.project_slug }} tests
+lint/flake8: ## quick check of style with flake8
+	flake8 ${PROJECT} tests
 
-lint: lint/flake8
+lint/pylint: ## check style with pylint
+	pylint ${PROJECT} tests \
+             --jobs=4
 
-test: ## run tests quickly with the default Python
-{%- if cookiecutter.use_pytest == 'y' %}
-	pytest
-{%- else %}
-	python setup.py test
-{%- endif %}
+lint: lint/flake8 lint/pylint
 
-test-all: ## run tests on every Python version with tox
-	tox
+pytype:
+	pytype ${PROJECT}
+
+# Note that we set pipefail on the command since `tee` always returns status 0
+# so we need pipefail if we want this command to fail on test failure.
+test: ## Run our regression tests
+	set -o pipefail && \
+          py.test ${PYTEST_FLAGS} ${PYTEST_IGNORE} \
+            ${PYTEST_EXTRA_FLAGS} ${PYTEST_TARGET} 2>&1 | tee ./test_log.txt
+
+check: ## Run all our checks including linting, type-checking, tests, etc.
+	${MAKE} lint
+	${MAKE} pytype
+	${MAKE} test
 
 coverage: ## check code coverage quickly with the default Python
-{%- if cookiecutter.use_pytest == 'y' %}
-	coverage run --source {{ cookiecutter.project_slug }} -m pytest
-{%- else %}
-	coverage run --source {{ cookiecutter.project_slug }} setup.py test
-{%- endif %}
+	coverage run --source ${PROJECT} -m pytest
 	coverage report -m
 	coverage html
 
-docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/{{ cookiecutter.project_slug }}.rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ {{ cookiecutter.project_slug }}
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-
-servedocs: docs ## compile the docs watching for changes
-	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
-
-release: dist ## package and upload a release
-	twine upload dist/*
-
-dist: clean ## builds source and wheel package
-	python setup.py sdist
-	python setup.py bdist_wheel
-	ls -l dist
-
-install: clean ## install the package to the active Python's site-packages
-	python setup.py install

@@ -53,14 +53,39 @@ Once you are done, [[https://github.com/cookiecutter/cookiecutter][cookiecutter]
 based on the =project_slug= value you specified. This directory has
 everything you need for your python project. You can just do the
 following to build and deploy docker containers to local ports (9080
-for HTTP and 9443 for SSL by default)
-
+for HTTP and 9443 for SSL by default) for testing:
 #+NAME: cpfd-local-deploy
 #+BEGIN_SRC shell :session show-cpfd
 cd python_boilerplate  # or whateer your project slug was
 make local_deploy
 #+END_SRC
 
+You can then verify that the flask server is up via
+#+NAME: cpfd-flask-health-check
+#+BEGIN_SRC shell :session show-cpfd
+curl localhost:9080/flask-health-check
+#+END_SRC
+or point your browser to http://localhost:9080. You can bring down the
+docker containers via
+#+NAME: cpfd-down
+#+BEGIN_SRC shell :session show-cpfd
+make docker_down
+#+END_SRC
+
+If you want to deploy for production on the usual ports, you can do
+#+NAME: cpfd-deploy
+#+BEGIN_SRC shell :session show-cpfd
+make deploy
+#+END_SRC
+and verify via
+#+NAME: cpfd-flask-health-check-production
+#+BEGIN_SRC shell :session show-cpfd
+curl localhost:80/flask-health-check
+#+END_SRC
+
+Of course, this flask server does not do much so once you have your
+cookiecutter template, you will probably want to look at the files in
+=/apps/webui/= and modify them for your application.
 
 * Implementation
 

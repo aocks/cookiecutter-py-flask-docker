@@ -1,6 +1,6 @@
 
 
-.PHONY: deploy local_deploy down clean
+.PHONY: deploy local_deploy docker_down clean
 SHELL = /bin/bash
 
 
@@ -37,5 +37,5 @@ deploy:
 local_deploy:
 	NGINX_HTTP_PORT=9080 NGINX_SSL_PORT=9443 ${MAKE} deploy
 
-down:
+docker_down:
 	docker-compose down
