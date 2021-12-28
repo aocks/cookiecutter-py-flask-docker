@@ -32,6 +32,7 @@ python3 -m venv venv      # create a virtualenv
 pip install cookiecutter  # so you can install cookiecutter
 #+END_SRC
 
+
 Once you have [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] installed, use it with this template via:
 #+NAME: cpfd-run-cookiecutter
 #+BEGIN_SRC shell :session show-cpfd :exports code
@@ -50,7 +51,9 @@ fields requested and what they are used for:
 
 Once you are done, [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] will create a new directory for you
 based on the =project_slug= value you specified. This directory has
-everything you need for your python project. You can just do
+everything you need for your python project. You can just do the
+following to build and deploy docker containers to local ports (9080
+for HTTP and 9443 for SSL by default)
 
 #+NAME: cpfd-local-deploy
 #+BEGIN_SRC shell :session show-cpfd
