@@ -58,7 +58,7 @@ fields requested and what they are used for:
     this to =emin63/ox_secrets,emin63/ox_ui= then those two repos will
     be pulled and put into the docker container for your flask
     app. You can leave this as the default or blank or see the section
-    on [[#sec-supporting-repos][Supporting repos]] for more details.
+    on [[#supporting-repos][Supporting repos]] for more details.
 
 Once you are done, [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] will create a new directory for you
 based on the =project_slug= value you specified. This directory has
@@ -145,7 +145,7 @@ This section describes the code deployment process in more detail.
 
 *** Supporting repos
     :PROPERTIES:
-    :CUSTOM_ID:  sec-supporting-repos
+    :CUSTOM_ID:  supporting-repos
     :END:
 
 You can provide a comma separated list of GitHub repos to deploy along
