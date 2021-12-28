@@ -13,5 +13,7 @@ def create():
     """
     app = Flask(__name__)
     app.add_url_rule('/', 'home', view_func=views.home)
+    app.add_url_rule('/flask-health-check', 'flask_health_check',
+                     view_func=views.flask_health_check)
 
     return app
