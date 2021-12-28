@@ -2,11 +2,14 @@
         lint lint/flake8 lint/pylint pytype deploy local_deploy reqs \
         help_venv
 
+
+SHELL = /bin/bash
+
 .DEFAULT_GOAL := help
 
 PROJECT={{ cookiecutter.project_slug }}
 
-PYTEST_TARGET = ${PROJECT}
+PYTEST_TARGET = ${PROJECT} tests
 PYTEST_EXTRA_FLAGS = 
 PYTEST_MINCOV = --cov-fail-under=60
 PYTEST_COV = --cov=${PYTEST_TARGET} --cov-report term-missing ${PYTEST_MINCOV}
