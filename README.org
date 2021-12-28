@@ -22,18 +22,20 @@ including things like:
 
 * Quickstart
 
-First make sure you have [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] installed (or create a venv and
-install it if you don't) and then use this template. For example, the
-following commands should work on most UNIX-like systems:
-
- (e.g., via =pip
-install cookiecutter=). Then do something like
-#+BEGIN_SRC shell :session show-cpfd
+First make sure you have [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] installed. If not, you can
+install [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] via something like the following:
+#+NAME: cpfd-install-cookiecutter
+#+BEGIN_SRC shell :session show-cpfd :exports code
 cd /tmp                   # work in tmp dir to illustrate example
 python3 -m venv venv      # create a virtualenv
 . venv/bin/activate       # and activate it
 pip install cookiecutter  # so you can install cookiecutter
-cookiecutter gh:aocks/cookiecutter-py-flask-docker
+#+END_SRC
+
+Once you have [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] installed, use it with this template via:
+#+NAME: cpfd-run-cookiecutter
+#+BEGIN_SRC shell :session show-cpfd :exports code
+cookiecutter gh:aocks/cookiecutter-py-flask-docker  
 #+END_SRC
 and answer the questions. The following are some details about how the
 fields requested and what they are used for:
@@ -46,10 +48,16 @@ fields requested and what they are used for:
     auto-generated from your project name to be allow lowercase with
     no space or hyphens.
 
-
 Once you are done, [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] will create a new directory for you
 based on the =project_slug= value you specified. This directory has
-everything you need for your python project. 
+everything you need for your python project. You can just do
+
+#+NAME: cpfd-local-deploy
+#+BEGIN_SRC shell :session show-cpfd
+cd python_boilerplate  # or whateer your project slug was
+make local_deploy
+#+END_SRC
+
 
 * Implementation
 
