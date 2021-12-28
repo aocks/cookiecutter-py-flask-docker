@@ -11,16 +11,16 @@ from {{cookiecutter.project_slug}}.apps import app_factory
 @click.group()
 def cli():
     "Command line interface to manage {{cookiecutter.project_slug}}."
-    pass
 
 
 @cli.group(cls=FlaskGroup, add_default_commands=False)
-@click.option('--loglevel', type=int, default=logging.INFO, help=(
-    'Python logLevel. Use %i for DEBUG, %i for INFO, etc.' % (
-        logging.DEBUG, logging.INFO)))
+@click.option('--loglevel', default='INFO', type=click.Choice(
+    ['DEBUG', 'INFO', 'WARNING', 'CRITICAL', 'ERROR', 'FATAL']), help=(
+        'Python logLevel'))
 def fcli(loglevel):
     "Custom flask related commands"
 
+    loglevel = getattr(logging, loglevel)
     app_factory.raw_set_startup_options(loglevel)
 
 
