@@ -3,7 +3,6 @@
 """Tests for `{{ cookiecutter.project_slug }}` package."""
 
 import pytest
-import unittest
 from click.testing import CliRunner
 
 
