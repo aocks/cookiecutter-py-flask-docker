@@ -17,7 +17,7 @@ services:
     depends_on:
       - flaskapp
     healthcheck:
-      test: ["CMD-SHELL", "curl --silent --fail localhost:$${LOCAL_HTTP_PORT:-80}/health-check?target=nginxproxy || exit 1"]
+      test: ["CMD-SHELL", "curl --silent --fail localhost:$${LOCAL_HTTP_PORT:-80}/health-check?target=nginxproxy&usingport=$${LOCAL_HTTP_PORT:-80} || exit 1"]
       interval: 10s
       timeout: 10s
       retries: 3
