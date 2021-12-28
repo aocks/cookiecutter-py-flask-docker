@@ -6,7 +6,6 @@ import os
 import click
 from flask.cli import FlaskGroup
 
-from {{cookiecutter.project_slug}} import cli
 from {{cookiecutter.project_slug}}.apps import app_factory
 
 
@@ -37,7 +36,6 @@ def serve(host, port, debug, my_app=None):
     'Run default server with default args.'
 
     my_app = my_app or app_factory.create_app()
-    root = os.path.abspath(os.path.dirname(app_factory.__file__))
     my_app.run(host=host, port=port, debug=debug)
 
 

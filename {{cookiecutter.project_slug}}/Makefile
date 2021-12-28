@@ -48,7 +48,7 @@ help:
 
 help_venv:  ## Show help on how to setup virtual environment
 	@echo "Do \"python3 -m venv venv_${PROJECT}\" to setup venv"
-	@echo "Then do \"source venv_${PROJECT}\/bin/activate\" to use it."
+	@echo "Then do \"source venv_${PROJECT}/bin/activate\" to use it."
 
 deploy:  ## deploy running docker containers onto this machine
 	${MAKE} -C docker deploy
