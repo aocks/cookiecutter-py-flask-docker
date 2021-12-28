@@ -22,9 +22,17 @@ including things like:
 
 * Quickstart
 
-First make sure you have [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] installed (e.g., via =pip
+First make sure you have [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] installed (or create a venv and
+install it if you don't) and then use this template. For example, the
+following commands should work on most UNIX-like systems:
+
+ (e.g., via =pip
 install cookiecutter=). Then do something like
-#+BEGIN_SRC sh
+#+BEGIN_SRC shell :session show-cpfd
+cd /tmp                   # work in tmp dir to illustrate example
+python3 -m venv venv      # create a virtualenv
+. venv/bin/activate       # and activate it
+pip install cookiecutter  # so you can install cookiecutter
 cookiecutter gh:aocks/cookiecutter-py-flask-docker
 #+END_SRC
 and answer the questions. The following are some details about how the
@@ -37,6 +45,11 @@ fields requested and what they are used for:
   - This will determine the name of your new project directory and is
     auto-generated from your project name to be allow lowercase with
     no space or hyphens.
+
+
+Once you are done, [[https://github.com/cookiecutter/cookiecutter][cookiecutter]] will create a new directory for you
+based on the =project_slug= value you specified. This directory has
+everything you need for your python project. 
 
 * Implementation
 

@@ -2,8 +2,8 @@
 
 SHELL = /bin/bash
 
-export NGINX_HTTP_PORT
-export NGINX_SSL_PORT
+export NGINX_HTTP_PORT=80
+export NGINX_SSL_PORT=443
 
 .PHONY: clean help deployn
 
