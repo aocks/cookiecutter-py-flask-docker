@@ -2,7 +2,6 @@
 
 
 import logging
-import os
 import click
 from flask.cli import FlaskGroup
 

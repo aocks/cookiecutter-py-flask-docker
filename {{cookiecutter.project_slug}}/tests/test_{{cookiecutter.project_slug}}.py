@@ -6,8 +6,9 @@ import pytest
 import unittest
 from click.testing import CliRunner
 
-from {{ cookiecutter.project_slug }} import {{ cookiecutter.project_slug }}
+
 from {{ cookiecutter.project_slug }} import cli
+
 
 @pytest.fixture
 def response():
@@ -34,4 +35,3 @@ def test_command_line_interface():
     help_result = runner.invoke(cli.main, ['--help'])
     assert help_result.exit_code == 0
     assert '--help  Show this message and exit.' in help_result.output
-
