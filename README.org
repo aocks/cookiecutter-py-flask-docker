@@ -92,6 +92,16 @@ cookiecutter template, you will probably want to look at the files in
 This section describes usage and features of this cookiecutter
 template.
 
+** Virtual environment
+
+You generally want to use a virtual environment (=venv=) so that you
+install requirements into that instead of your base system. If you do
+=make venv= at the top level, the Makefile will create a virtual
+environment and populate it with your requirements.
+
+You will need to do =source venv_PROJECT_NAME/bin/activate= to
+activate it.
+
 ** Checking
 
 Doing =make check= in the top-level project directory will run various

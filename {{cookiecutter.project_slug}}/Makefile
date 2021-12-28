@@ -1,6 +1,7 @@
 .PHONY: clean clean-build clean-pyc clean-test coverage dist help \
         lint lint/flake8 lint/pylint pytype deploy local_deploy reqs \
-        help_venv venv_{{ cookiecutter.project_slug }} venv
+        help_venv venv_{{ cookiecutter.project_slug }} venv \
+	exec_nginx
 
 
 SHELL = /bin/bash
@@ -121,3 +122,5 @@ coverage: ## check code coverage quickly with the default Python
 	coverage report -m
 	coverage html
 
+exec_nginx: ## exec into the nginx docker container if it is running
+	${MAKE} -C docker exec_nginx

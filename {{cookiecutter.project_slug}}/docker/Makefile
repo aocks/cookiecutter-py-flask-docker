@@ -1,6 +1,6 @@
 
 
-.PHONY: deploy local_deploy docker_down clean
+.PHONY: deploy local_deploy docker_down clean exec_nginx
 SHELL = /bin/bash
 
 
@@ -39,3 +39,6 @@ local_deploy:
 
 docker_down:
 	docker-compose down
+
+exec_nginx:
+	docker exec -it docker_nginxproxy_1 /bin/bash
