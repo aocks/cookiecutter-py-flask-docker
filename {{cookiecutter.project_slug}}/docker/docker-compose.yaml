@@ -17,11 +17,10 @@ services:
     depends_on:
       - flaskapp
     healthcheck:
-      test: ["CMD-SHELL", "curl --silent --fail localhost:80/health-check || exit 1"]
+      test: ["CMD-SHELL", "${NGINX_HEALTH_TEST:-curl --silent --fail localhost:80/health-check || exit 1}"]
       interval: 10s
       timeout: 10s
       retries: 3
-      disable: true
     command: /app/start.sh
   flaskapp:
     build:
