@@ -1,5 +1,7 @@
 .PHONY: clean clean-build clean-pyc clean-test coverage dist help \
-        lint lint/flake8 lint/pylint pytype deploy local_deploy
+        lint lint/flake8 lint/pylint pytype deploy local_deploy reqs \
+        help_venv
+
 .DEFAULT_GOAL := help
 
 PROJECT={{ cookiecutter.project_slug }}
@@ -44,6 +46,9 @@ export PRINT_HELP_PYSCRIPT
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
+help_venv:  ## Show help on how to setup virtual environment
+	@echo "Do \"python3 -m venv venv_${PROJECT}\" to setup venv"
+	@echo "Then do \"source venv_${PROJECT}\/bin/activate\" to use it."
 
 deploy:  ## deploy running docker containers onto this machine
 	${MAKE} -C docker deploy
@@ -51,6 +56,12 @@ local_deploy:  ## deploy running docker containers with "local" ports
 	${MAKE} -C docker local_deploy
 docker_down:  ## bring down docker containers created from this project
 	${MAKE} -C docker docker_down
+
+reqs:  ## Make requirements by install things via pip
+	@if [-z "`which pip | grep venv`"] ; then \
+		echo "Does not seem like you setup venv; try make help_venv" &&\
+			exit 1 ; fi
+	pip install -r requirements_dev.txt
 
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
