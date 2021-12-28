@@ -35,6 +35,6 @@ services:
       interval: 10s
       timeout: 10s
       retries: 3
-    command: gunicorn -w 3 -t 60 -b 0.0.0.0:8000 'wsgi:create_app()'
+    command: gunicorn -w 1 -t 60 -b 0.0.0.0:8000 'wsgi:create_app()'
     
 
