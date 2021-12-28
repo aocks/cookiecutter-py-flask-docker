@@ -114,7 +114,19 @@ maintain high quality code.
 ** Docker, certbot, etc.
 
 One of the main motivations for using this template to setup docker,
-nginx, and flask is so you can easily manage SSL certificates with certbot.
+nginx, and flask is so you can easily manage SSL certificates with
+certbot. After you have brought up the docker containers with
+something like =make deploy= or =make local_deploy= you can exec into
+the nginx container and run certbot via something like:
+#+BEGIN_SRC shell
+make exec_nginx
+certbot
+#+END_SRC
+
+The docker-compose file volume mounts your ningx and letsencrypt
+directories in =/opt/docker/persist/PROJECT_NAME= so that your nginx
+configuration and your letsencrypt certificates persist even when your
+containers shut down.
 
 * Implementation
 
@@ -122,4 +134,36 @@ This section describes the implementation details of how this
 cookiecutter template works. It is mainly of interesting if you want
 to extend the template. If you just want to use it, you can skip this
 section.
+
+If you want to do development work you will want to fork the main
+GitHub repository for this since cookiecutter likes to pull the
+template from a fully checked-in repo. You can also have a GitHub repo
+locally (provided that it ends in =.git=) and use the =file:///= path
+to point cookiecutter to your GitHub template.
+
+In any case, once have your cookiecutter repo setup, you can do
+something like the following to test if your template works:
+#+BEGIN_SRC shell :session show-cpfd
+echo First set the COOKIE_REPO variable to point to your template
+COOKIE_REPO=git@github.com:aocks/cookiecutter-py-flask-docker
+echo Then make sure you have cookiecutter installed
+python3 -m venv /tmp/venv
+source /tmp/venv/bin/activate
+pip install cookiecutter
+echo Cleanup previous version and create the template
+\rm -rf /tmp/python_boilerplate
+cd /tmp
+cookiecutter ${COOKIE_REPO} --no-input
+echo Now make sure the template passes tests
+cd /tmp/python_boilerplate
+deactivate
+make venv
+source venv_python_boilerplate/bin/activate
+make reqs
+make test
+#+END_SRC
+
+You can also do =make deploy_local= to make sure deployment works (and
+then =make docker_down= to shut it down) if you like. If there are
+problems, fix your template and then repeat the above steps.
 
