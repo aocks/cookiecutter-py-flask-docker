@@ -9,11 +9,11 @@ from {{cookiecutter.project_slug}}.apps import app_factory
 
 
 @click.group()
-def cli():
+def main():
     "Command line interface to manage {{cookiecutter.project_slug}}."
 
 
-@cli.group(cls=FlaskGroup, add_default_commands=False)
+@main.group(cls=FlaskGroup, add_default_commands=False)
 @click.option('--loglevel', default='INFO', type=click.Choice(
     ['DEBUG', 'INFO', 'WARNING', 'CRITICAL', 'ERROR', 'FATAL']), help=(
         'Python logLevel'))
@@ -36,12 +36,6 @@ def serve(host, port, debug, my_app=None):
 
     my_app = my_app or app_factory.create_app()
     my_app.run(host=host, port=port, debug=debug)
-
-
-def main():
-    """Run the main command line.
-    """
-    return cli()
 
 
 if __name__ == "__main__":
