@@ -12,7 +12,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [Click>=7.0]
 
-test_requirements = [{%- if cookiecutter.use_pytest == 'y' %}'pytest>=3',{%- endif %} ]
+test_requirements = ['pytest>=3']
 
 {%- set license_classifiers = {
     'MIT license': 'License :: OSI Approved :: MIT License',
