@@ -1,6 +1,6 @@
 .PHONY: clean clean-build clean-pyc clean-test coverage dist help \
         lint lint/flake8 lint/pylint pytype deploy local_deploy reqs \
-        help_venv venv_{{ cookiecutter.project_slug }}
+        help_venv venv_{{ cookiecutter.project_slug }} venv
 
 
 SHELL = /bin/bash
@@ -59,6 +59,8 @@ local_deploy:  ## deploy running docker containers with "local" ports
 	${MAKE} -C docker local_deploy
 docker_down:  ## bring down docker containers created from this project
 	${MAKE} -C docker docker_down
+
+venv: venv_${PROJECT}
 
 venv_${PROJECT}:
 	python3 -m venv venv_${PROJECT}
