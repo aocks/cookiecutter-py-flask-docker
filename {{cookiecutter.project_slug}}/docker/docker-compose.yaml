@@ -21,6 +21,7 @@ services:
       interval: 10s
       timeout: 10s
       retries: 3
+      disable: true
     command: /app/start.sh
   flaskapp:
     build:
