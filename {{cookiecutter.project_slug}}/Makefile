@@ -11,7 +11,7 @@ PROJECT={{ cookiecutter.project_slug }}
 
 PYTEST_TARGET = ${PROJECT} tests
 PYTEST_EXTRA_FLAGS = 
-PYTEST_MINCOV = --cov-fail-under=60
+PYTEST_MINCOV = --cov-fail-under=50
 PYTEST_COV = --cov=${PYTEST_TARGET} --cov-report term-missing ${PYTEST_MINCOV}
 PYTEST_FLAGS = -vvv --doctest-modules --doctest-glob='*.md' \
                --maxfail=20
@@ -103,7 +103,7 @@ pytype:
 # so we need pipefail if we want this command to fail on test failure.
 test: ## Run our regression tests
 	set -o pipefail && \
-          py.test ${PYTEST_FLAGS} ${PYTEST_IGNORE} \
+          py.test ${PYTEST_FLAGS} ${PYTEST_IGNORE} ${PYTEST_COV} \
             ${PYTEST_EXTRA_FLAGS} ${PYTEST_TARGET} 2>&1 | tee ./test_log.txt
 
 check: ## Run all our checks including linting, type-checking, tests, etc.

@@ -87,6 +87,20 @@ Of course, this flask server does not do much so once you have your
 cookiecutter template, you will probably want to look at the files in
 =/apps/webui/= and modify them for your application.
 
+* Usage and Features
+
+This section describes usage and features of this cookiecutter
+template.
+
+** Checking
+
+Doing =make check= in the top-level project directory will run various
+checks including linting to check code style, pytype to check type
+usage, and finally regression tests.
+
+You should do =make check= regularly and fix any errors in order to
+maintain high quality code.
+
 * Implementation
 
 This section describes the implementation details of how this
