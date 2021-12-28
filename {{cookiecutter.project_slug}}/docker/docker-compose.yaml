@@ -12,8 +12,8 @@ services:
       - /opt/docker/persist/nginx/etc/nginx/conf.d/:/etc/nginx/conf.d/
       - /opt/docker/persist/nginx/etc/letsencrypt:/etc/letsencrypt
     ports:
-      - "${NGINX_HTTP_PORT:?Need to set NGINX_HTTP_PORT}:80"
-      - "${NGINX_SSL_PORT:?Need to set NGINX_SSL_PORT}:443"
+      - "${NGINX_HTTP_PORT}:80"
+      - "${NGINX_SSL_PORT}:443"
     depends_on:
       - flaskapp
     healthcheck:
