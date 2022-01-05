@@ -1,6 +1,6 @@
 .PHONY: clean clean-build clean-pyc clean-test coverage dist help \
         lint lint/flake8 lint/pylint pytype deploy local_deploy reqs \
-        help_venv venv_{{ cookiecutter.project_slug }} venv \
+        help_venv venv_{{cookiecutter.project_slug}} venv \
 	exec_nginx
 
 
@@ -8,7 +8,7 @@ SHELL = /bin/bash
 
 .DEFAULT_GOAL := help
 
-PROJECT={{ cookiecutter.project_slug }}
+PROJECT={{cookiecutter.project_slug}}
 
 PYTEST_TARGET = ${PROJECT} tests
 PYTEST_EXTRA_FLAGS = 
@@ -60,6 +60,13 @@ local_deploy:  ## deploy running docker containers with "local" ports
 	${MAKE} -C docker local_deploy
 docker_down:  ## bring down docker containers created from this project
 	${MAKE} -C docker docker_down
+
+
+serve:  ## Run local server with http (won't work with oauth)
+	python3 {{cookiecutter.project_slug}}/manage.py fcli serve
+
+serve_https:  ## Run local server with https (may allow using oauth)
+	python3 {{cookiecutter.project_slug}}/manage.py fcli serve --use-ssl 1
 
 venv: venv_${PROJECT}
 

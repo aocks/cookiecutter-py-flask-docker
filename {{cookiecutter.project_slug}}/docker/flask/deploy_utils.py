@@ -1,6 +1,7 @@
 """Utilities to help deploy apps.
 """
 
+import base64
 import os
 import subprocess
 import logging
@@ -11,6 +12,35 @@ import click
 @click.group()
 def cli():
     "Command line interface for deployment tools."
+
+
+@cli.command()
+@click.option('--inject', envvar='INJECT_VARS_TO_FILES', help=(
+    'Comma separated name:value pairs to inject as files.\n'
+    'A value of --inject VNAME_1:FNAME_1:VAL_1,VNAME_2:FNAME_2:VAL_2\n'
+    'would result in base64 decoding VAL_1, saving it in file\n'
+    'named FNAME_1 and then doing the same for the variable in \n'
+    'VNAME_2 and so on.'))
+@click.option('--splitlist', default=',', help=(
+    'How to split the --inject option list (default ",").'))
+@click.option('--splititem', default=':', help=(
+    'How to split items in the --inject option list (default ":").'))
+def extract_files(inject, splitlist, splititem):
+    """Extract files and write them.
+    """
+    msg = []
+    if not inject and not inject.strip():
+        msg.append('No value provided for --inject')
+    else:
+        item_list = inject.split(splitlist)
+        for item in item_list:
+            var_name, orig_location, var_value = item.split(splititem)
+            file_location = os.path.abspath(orig_location)
+            decoded = base64.b64decode(var_value)
+            with open(file_location, 'wb') as fdesc:
+                fdesc.write(decoded)
+        msg.append(f'Injected file to {file_location}')
+    click.echo('\n'.join(msg))
 
 
 @cli.command()

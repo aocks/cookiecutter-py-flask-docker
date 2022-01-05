@@ -1,19 +1,10 @@
-"""WSGI script to create flask app.
+"""WSGI script to create flask app locally.
 
-Also useful for flask command line usage.
+Also useful for flask command line usage since if you use the
+manage.py script, it will want to see a wsgi.py file.
 """
 
-from python_boilerplate.apps import app_factory
-
-
-def create_app():
-    """WSGI create_app method which calls create_app from app_factory.
-
-    This is only provided since the flask cli looks for it by default.
-    We just use it to call the app_factory.create_app.
-    """
-    app = app_factory.create_app()
-    return app
+from {{cookiecutter.project_slug}}.apps.app_factory import create_app
 
 
 if __name__ == "__main__":

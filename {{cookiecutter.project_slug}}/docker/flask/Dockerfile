@@ -1,6 +1,7 @@
 FROM ubuntu:20.04
 
-RUN apt update && apt install -y python3 python3-venv git curl
+RUN apt update && apt install -y \
+    python3 python3-venv git curl nano
 
 # upgrade pip
 
@@ -20,6 +21,8 @@ RUN mkdir -p ~/.ssh && \
 
 ARG GIT_REPOS
 
+ARG INJECT_VARS_TO_FILES=${INJECT_VARS_TO_FILES}
+
 # venv
 ENV VIRTUAL_ENV=/home/app/venv
 
@@ -27,6 +30,10 @@ ENV VIRTUAL_ENV=/home/app/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN pip install -r requirements.txt
+
+# Use the deploy_utils script to convert env vars to files
+RUN python3 /home/app/deploy_utils.py extract-files \
+  --inject ${INJECT_VARS_TO_FILES}
 
 # Use the deploy_utils script to pull additional git repos
 RUN python3 /home/app/deploy_utils.py pull-git-repos \
